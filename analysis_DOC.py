@@ -183,22 +183,16 @@ else:
     CO22 = (d.solution.elements.DIRECT_OCEAN_CAPTURE_PLANTS.objectives.unnamed[0] + d.solution.elements.DIRECT_OCEAN_CAPTURE_PLANTS.objectives.unnamed[1] + d.solution.elements.CARBON_DIOXIDE_STORAGE.objectives.unnamed[0] + d.solution.elements.CARBON_DIOXIDE_STORAGE.objectives.unnamed[1] + d.solution.elements.PIPELINE.objectives.named.pipe_cost_fix + d.solution.elements.PIPELINE.objectives.named.pipe_cost_var )/(10*years)
     Others2 = (d.solution.elements.HVDC.objectives.unnamed[0] + d.solution.elements.HVDC.objectives.unnamed[1]  + d.solution.elements.DESALINATION_PLANTS.objectives.unnamed[0] + d.solution.elements.WATER_STORAGE.objectives.unnamed[0])/(10*years)
 
-    filename = "data/DAC_remote_hub.json"
-    dico = {}
-    with open(filename, "r") as fp:
-        dico = json.load(fp)
-    
-    e = MakeMeReadable(dico)
+   
 
 
-    wind1 = (np.sum([e.solution.elements.WIND_PLANTS.objectives.unnamed[0], e.solution.elements.WIND_PLANTS.objectives.unnamed[1]]))/(10*years)
-    hydrogen1 = (e.solution.elements.ELECTROLYSIS_PLANTS.objectives.unnamed[0] + e.solution.elements.ELECTROLYSIS_PLANTS.objectives.unnamed[1] + e.solution.elements.HYDROGEN_STORAGE.objectives.unnamed[0] + e.solution.elements.HYDROGEN_STORAGE.objectives.unnamed[1])/(10*years)
-    battery1 = ( np.sum([e.solution.elements.BATTERY_STORAGE.objectives.unnamed[0],e.solution.elements.BATTERY_STORAGE.objectives.unnamed[1]]))/(10*years)
-    solar1 = (e.solution.elements.SOLAR_PV_PLANTS.objectives.unnamed[0] + e.solution.elements.SOLAR_PV_PLANTS.objectives.unnamed[1])/(10*years)
-    methanation1 = (e.solution.elements.METHANE_LIQUEFACTION_PLANTS.objectives.unnamed[0] + e.solution.elements.METHANE_LIQUEFACTION_PLANTS.objectives.unnamed[1] + e.solution.elements.LIQUEFIED_METHANE_REGASIFICATION.objectives.unnamed[0] + e.solution.elements.LIQUEFIED_METHANE_REGASIFICATION.objectives.unnamed[1] + e.solution.elements.METHANATION_PLANTS.objectives.unnamed[0] + e.solution.elements.METHANATION_PLANTS.objectives.unnamed[1] + e.solution.elements.LIQUEFIED_METHANE_CARRIERS.objectives.unnamed[0] + e.solution.elements.LIQUEFIED_METHANE_CARRIERS.objectives.unnamed[1] + e.solution.elements.LIQUEFIED_METHANE_STORAGE_DESTINATION.objectives.unnamed[0] + e.solution.elements.LIQUEFIED_METHANE_STORAGE_DESTINATION.objectives.unnamed[1] + e.solution.elements.LIQUEFIED_METHANE_STORAGE_HUB.objectives.unnamed[0] + e.solution.elements.LIQUEFIED_METHANE_STORAGE_HUB.objectives.unnamed[1])/(10*years)
-    CO21 = (e.solution.elements.DIRECT_AIR_CAPTURE_PLANTS.objectives.unnamed[0] + e.solution.elements.DIRECT_AIR_CAPTURE_PLANTS.objectives.unnamed[1] + e.solution.elements.CARBON_DIOXIDE_STORAGE.objectives.unnamed[0] + e.solution.elements.CARBON_DIOXIDE_STORAGE.objectives.unnamed[1]  )/(10*years)
-    Others1 = (e.solution.elements.HVDC.objectives.unnamed[0] + e.solution.elements.HVDC.objectives.unnamed[1]  + e.solution.elements.DESALINATION_PLANTS.objectives.unnamed[0] + e.solution.elements.DESALINATION_PLANTS.objectives.unnamed[1] + e.solution.elements.WATER_STORAGE.objectives.unnamed[0] + e.solution.elements.WATER_STORAGE.objectives.unnamed[1])/(10*years)
-
+    wind1 = (43.36)
+    hydrogen1 = 36.874
+    battery1 = 6.82
+    solar1 = 17.011
+    methanation1 = 18.74
+    CO21 = 11.96
+    Others1 = 14.93
 
     colors = ['#BFC9CA', '#D35400', '#F5B041', '#F4D03F', '#ABEBC6', '#5DADE2', '#2ECC71']
     categories = ['DOC remote hub', 'DAC remote hub']
@@ -231,9 +225,9 @@ else:
     plt.show()
 
     categories = ['DAC remote hub', 'DOC remote hub']
-    values1 = [e.solution.elements.SOLAR_PV_PLANTS.variables.capacity.values[0], d.solution.elements.SOLAR_PV_PLANTS.variables.capacity.values[0]] #PV
-    values2 = [e.solution.elements.WIND_PLANTS.variables.capacity.values[0], d.solution.elements.WIND_PLANTS.variables.capacity.values[0]] #wind
-    values3 = [e.solution.elements.BATTERY_STORAGE.variables.capacity_stock.values[0], d.solution.elements.BATTERY_STORAGE.variables.capacity_stock.values[0]] #batteries
+    values1 = [4.3, d.solution.elements.SOLAR_PV_PLANTS.variables.capacity.values[0]] #PV
+    values2 = [4.3, d.solution.elements.WIND_PLANTS.variables.capacity.values[0]] #wind
+    values3 = [2.8, d.solution.elements.BATTERY_STORAGE.variables.capacity_stock.values[0]] #batteries
     bar_width = 0.25
 
     x = np.arange(len(categories))

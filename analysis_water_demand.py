@@ -51,20 +51,6 @@ with open(filename, "r") as fp:
 d = MakeMeReadable(dico)
 
 
-x = ['[GWh] Batteries', '[GW] Solar PV', '[GW] Wind turbines', '[TWh] Hydrogen', '[GW_el] Electrolysis', '[GW_th] Methanation', '[Mt/y] DOC', '[kt/h] Desalination', '[kt/h] Water Storage ' ]
-y = np.array([d.solution.elements.BATTERY_STORAGE.variables.capacity_stock.values, d.solution.elements.SOLAR_PV_PLANTS.variables.capacity.values, d.solution.elements.WIND_PLANTS.variables.capacity.values,np.divide(d.solution.elements.HYDROGEN_STORAGE.variables.capacity_stock.values,1/0.04), d.solution.elements.ELECTROLYSIS_PLANTS.variables.capacity.values , np.divide(d.solution.elements.METHANATION_PLANTS.variables.capacity.values, 1/16), np.divide(d.solution.elements.DIRECT_OCEAN_CAPTURE_PLANTS.variables.capacity.values, 1/8.76), d.solution.elements.DESALINATION_PLANTS.variables.capacity.values, d.solution.elements.WATER_STORAGE.variables.capacity_flow.values])
-y_rounded = np.round(y, 2)
-
-plt.figure(figsize=(10,7))
-bars = plt.barh(x,y_rounded.flatten(), height=0.6)
-plt.xlim(0, 6)
-plt.title('Capacities of storage technologies')
-
-for i, bar in enumerate(bars):
-    plt.text(bar.get_width(), i, str(bar.get_width()))
-
-
-
 p = d.solution.elements.DESALINATION_PLANTS.variables.water.values
 q = d.model.hyperedges.COASTAL_WATER_BALANCE.parameters.w_demand
 storage = d.solution.elements.WATER_STORAGE.variables.water_out.values
@@ -108,21 +94,6 @@ plt.fill_between(range(800), b[:800], max(b[:800]), color='white', alpha=0.5, la
 plt.legend()
 plt.savefig('images_water_demand/elec_uti.pdf', dpi=150)
 
-filename = "data/no_water_demand.json"
-dico = {}
-with open(filename, "r") as fp:
-    dico = json.load(fp)
-   
-e = MakeMeReadable(dico)
-
-x = ['[GWh] Batteries', '[GW] Solar PV', '[GW] Wind turbines', '[TWh] Hydrogen', '[GW_el] Electrolysis', '[GW_th] Methanation', '[Mt/y] DOC', '[kt/h] Desalination', '[kt/h] Water Storage ' ]
-y = np.array([d.solution.elements.BATTERY_STORAGE.variables.capacity_stock.values, d.solution.elements.SOLAR_PV_PLANTS.variables.capacity.values, d.solution.elements.WIND_PLANTS.variables.capacity.values,np.divide(d.solution.elements.HYDROGEN_STORAGE.variables.capacity_stock.values,1/0.04), d.solution.elements.ELECTROLYSIS_PLANTS.variables.capacity.values , np.divide(d.solution.elements.METHANATION_PLANTS.variables.capacity.values, 1/16), np.divide(d.solution.elements.DIRECT_OCEAN_CAPTURE_PLANTS.variables.capacity.values, 1/8.76), d.solution.elements.DESALINATION_PLANTS.variables.capacity.values, d.solution.elements.WATER_STORAGE.variables.capacity_flow.values])
-y_rounded = np.round(y, 2)
-
-plt.figure(figsize=(10,7))
-bars = plt.barh(x,y_rounded.flatten(), height=0.6)
-plt.xlim(0, 6)
-plt.title('Capacities of storage technologies SANS DEMANDE')
 
 for i, bar in enumerate(bars):
     plt.text(bar.get_width(), i, str(bar.get_width()))
@@ -164,4 +135,5 @@ for i in range(len(categories)):
     
 
 ax.legend(loc='lower center', bbox_to_anchor=(0.5, 1), ncol=len(categories)+1)
-plt.savefig('images_water_demand/' + str(scenario) + '.pdf', dpi=150, bbox_inches='tight')
+plt.savefig('images_water_demand/cost' + str(scenario) + '.pdf', dpi=150, bbox_inches='tight')
+plt.show()
