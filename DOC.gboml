@@ -6,6 +6,7 @@ wacc = 0.07;
 number_years_horizon = T/8760;
 facteur = 0;
 conversion_factor_electricity = 0;
+minimum_level = 0;
 
 #NODE SOLAR_PV_PLANTS
 #PARAMETERS
@@ -229,7 +230,6 @@ lifetime = 30.0;
 annualised_capex = full_capex * global.wacc * (1 + global.wacc)**lifetime / ((1 + global.wacc)**lifetime - 1); // MEur
 fom = 0.09; // MEur/year
 vom = 0.0738*global.facteur; // MEur/kt
-minimum_level = 1.0;
 ramp_rate_up = 0.0;
 ramp_rate_down = 0.0;
 #VARIABLES
@@ -238,7 +238,7 @@ external: electricity[T];
 external: carbon_dioxide[T];
 #CONSTRAINTS
 carbon_dioxide[t] <= capacity;
-minimum_level * capacity <= carbon_dioxide[t];
+global.minimum_level * capacity <= carbon_dioxide[t];
 electricity[t] == global.conversion_factor_electricity * carbon_dioxide[t];
 carbon_dioxide[t] <= carbon_dioxide[t-1] + ramp_rate_up * capacity;
 carbon_dioxide[t-1] <= carbon_dioxide[t] + ramp_rate_down * capacity;
