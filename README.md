@@ -14,9 +14,9 @@ To run the simulation with the desired parameters and save the results:
 
 `python3 main_DOC.py -sc $scenario`
 
-where you choose between 3 scenarios:    
+where you choose between 4 scenarios:    
  
-`$scenario \in {reference, optimistic, conservative}`   
+`$scenario \in {reference, optimistic, conservative, variable_DOC}`   
 
 The default case is the reference scenario
 
@@ -32,13 +32,13 @@ To obtain all graphs related to analyses:
 
 `python3 analysis_DOC.py -sc $scenario`
 
-where you choose between 4 scenarios
+where you choose between 5 scenarios
 
-`$scenario \in {reference, optimistic, conservative, comparison}`  
+`$scenario \in {reference, optimistic, conservative, comparison, variable_DOC}`  
 
 The default case is the reference scenario
 
-Comparison scenario will provide the costs of all scenarios on the same graph,    
+Comparison scenario will provide the costs of all basic scenarios on the same graph,    
 the 3 scenarios must have been simulated beforehand.
 
 # How to run simulation and save results for water assessment part
