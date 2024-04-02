@@ -10,28 +10,40 @@ import os
 parser = argparse.ArgumentParser()
 
 parser.add_argument('-sc', '--scenario', help='Scenario', 
-                        type=str, default="reference", choices=['reference','optimistic','conservative'])
+                        type=str, default="reference", choices=['reference','optimistic','conservative', 'variable_DOC'])
 
 args = parser.parse_args()
 scenario = args.scenario
 
 
-years = 5
-gboml_model = GbomlGraph(8760*years)
-nodes, edges, global_params = gboml_model.import_all_nodes_and_edges("DOC.gboml")
-
-
 if scenario == "optimistic":
     facteur = 0.8
     conversion_factor_electricity = 0.663
+    years = 5
+    minimum_level = 1.0
 elif scenario == "reference":
     facteur = 1
     conversion_factor_electricity = 0.953
+    years = 5
+    minimum_level = 1.0
 elif scenario == "conservative":
     facteur = 1.2
     conversion_factor_electricity = 1.528
+    years = 5
+    minimum_level = 1.0
+elif scenario == "variable_DOC":
+    facteur = 1
+    conversion_factor_electricity = 0.953
+    years = 1
+    minimum_level = 0.5
 else:
     print("Choose an appropriate scenario")
+
+
+
+gboml_model = GbomlGraph(8760*years)
+nodes, edges, global_params = gboml_model.import_all_nodes_and_edges("DOC.gboml")
+
 
 
 
@@ -43,6 +55,9 @@ global_params = list(filter(lambda x: x.name != "conversion_factor_electricity",
 global_params.append(gcc.Parameter("conversion_factor_electricity", 
                             gcc.Expression("literal", conversion_factor_electricity)))
 
+global_params = list(filter(lambda x: x.name != "minimum_level", global_params))
+global_params.append(gcc.Parameter("minimum_level", 
+                            gcc.Expression("literal", minimum_level)))
 
 
 gboml_model.add_nodes_in_model(*nodes)
